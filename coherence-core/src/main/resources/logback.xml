@@ -29,6 +29,7 @@
 	<logger name="com.mchange" level="ERROR"></logger>
 
 	<logger name="com.himanshu" level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT" />
 	</logger>
 
 </configuration>

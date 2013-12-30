@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.himanshu.cache.dto.Person;
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.NamedCache;
 
@@ -34,6 +35,10 @@ public class CoherenceCacheTest {
 		log.debug("Starting cachePutTest");
 		NamedCache cache = CacheFactory.getCache("test");
 		cache.put(key, value);
+		Person p = new Person();
+		p.setName("Himanshu");
+		p.setAge(10);
+		cache.put("person", p);
 	}
 	
 	@Test
@@ -41,5 +46,7 @@ public class CoherenceCacheTest {
 		log.debug("Starting cacheGetTest");
 		NamedCache cache = CacheFactory.getCache("test");
 		Assert.assertTrue(value.equalsIgnoreCase((String)cache.get(key)));
+		Person p = (Person)cache.get("person");
+		log.debug(p.getName());
 	}
 }
