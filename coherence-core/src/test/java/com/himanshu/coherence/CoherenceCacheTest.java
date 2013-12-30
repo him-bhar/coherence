@@ -16,14 +16,18 @@
 package com.himanshu.coherence;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.NamedCache;
 
 public class CoherenceCacheTest {
+	Logger log = LoggerFactory.getLogger(CoherenceCacheTest.class);
+	
 	@Test
 	public void cacheTest() {
-		System.out.println("Hello");
+		log.debug("Starting cacheTest");
 		NamedCache cache = CacheFactory.getCache("test");
 		cache.put("1", "2");
 	}
