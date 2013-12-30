@@ -15,6 +15,7 @@
 */
 package com.himanshu.coherence;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +26,20 @@ import com.tangosol.net.NamedCache;
 public class CoherenceCacheTest {
 	Logger log = LoggerFactory.getLogger(CoherenceCacheTest.class);
 	
+	private String key="testKey";
+	private String value="testValue";
+	
 	@Test
-	public void cacheTest() {
-		log.debug("Starting cacheTest");
+	public void cachePutTest() {
+		log.debug("Starting cachePutTest");
 		NamedCache cache = CacheFactory.getCache("test");
-		cache.put("1", "2");
+		cache.put(key, value);
+	}
+	
+	@Test
+	public void cacheGetTest() {
+		log.debug("Starting cacheGetTest");
+		NamedCache cache = CacheFactory.getCache("test");
+		Assert.assertTrue(value.equalsIgnoreCase((String)cache.get(key)));
 	}
 }
