@@ -14,7 +14,7 @@ descriptor: pof-config.xsd.
               xmlns="http://xmlns.oracle.com/coherence/coherence-pof-config"
               xsi:schemaLocation="http://xmlns.oracle.com/coherence/coherence-pof-config coherence-pof-config.xsd">
   <user-type-list>
-    <include>coherence-pof-config.xml</include>
+    <include>pof-config.xml</include>
  
     <user-type>
       <type-id>1001</type-id>

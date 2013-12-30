@@ -39,13 +39,14 @@ public class CoherenceCacheTest {
 		p.setName("Himanshu");
 		p.setAge(10);
 		cache.put("person", p);
+		
+		cacheGetTest();
 	}
 	
-	@Test
 	public void cacheGetTest() {
 		log.debug("Starting cacheGetTest");
 		NamedCache cache = CacheFactory.getCache("test");
-		Assert.assertTrue(value.equalsIgnoreCase((String)cache.get(key)));
+		Assert.assertTrue("Actual: "+(String)cache.get(key)+". Original: "+value, value.equalsIgnoreCase((String)cache.get(key)));
 		Person p = (Person)cache.get("person");
 		log.debug(p.getName());
 	}
