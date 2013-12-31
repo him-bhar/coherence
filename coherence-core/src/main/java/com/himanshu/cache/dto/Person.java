@@ -66,5 +66,9 @@ public class Person implements PortableObject {
 		writer.writeString(fieldIndex.name.getFieldId(), name);
 		writer.writeInt(fieldIndex.age.getFieldId(), age);
 	}
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", age=" + age + "]";
+	}
 
 }
