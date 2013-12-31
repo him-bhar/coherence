@@ -15,7 +15,11 @@
 */
 package com.himanshu.coherence;
 
+import java.util.Map;
+import java.util.Set;
+
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +27,9 @@ import org.slf4j.LoggerFactory;
 import com.himanshu.cache.dto.Person;
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.NamedCache;
+import com.tangosol.util.InvocableMap.Entry;
 import com.tangosol.util.filter.LikeFilter;
+import com.tangosol.util.processor.AbstractProcessor;
 
 public class CoherenceCacheTest {
 	Logger log = LoggerFactory.getLogger(CoherenceCacheTest.class);
@@ -31,9 +37,8 @@ public class CoherenceCacheTest {
 	private String key="testKey";
 	private String value="testValue";
 	
-	@Test
-	public void cachePutTest() {
-		log.debug("Starting cachePutTest");
+	@BeforeClass
+	public static void setupData() {
 		NamedCache cache = CacheFactory.getCache("test");
 		//cache.put(key, value);
 		Person p = new Person();
@@ -45,11 +50,9 @@ public class CoherenceCacheTest {
 		p1.setName("Bittoo");
 		p1.setAge(20);
 		cache.put("person2", p1);
-		
-		cacheGetTest();
-		cacheQueryTest();
 	}
 	
+	@Test
 	public void cacheGetTest() {
 		log.debug("Starting cacheGetTest");
 		NamedCache cache = CacheFactory.getCache("test");
@@ -58,12 +61,30 @@ public class CoherenceCacheTest {
 		log.debug(p.toString());
 	}
 	
+	@Test
 	public void cacheQueryTest() {
 		log.debug("Starting cacheQueryTest");
 		LikeFilter filter = new LikeFilter("getName", "%mans%");
 		NamedCache cache = CacheFactory.getCache("test");
 		log.debug(cache.keySet().toString());
 		log.debug(cache.getAll(cache.keySet(filter)).toString());
-		Assert.assertTrue("Filter executed successfully", cache.keySet(filter).contains("person"));
+		Assert.assertTrue("Filter execution failed", cache.keySet(filter).contains("person"));
+	}
+	
+	@Test
+	public void cacheEntryProcessorTest() {
+		log.debug("Starting cacheEntryProcessorTest");
+		LikeFilter filter = new LikeFilter("getName", "%mans%");
+		NamedCache cache = CacheFactory.getCache("test");
+		Map<String, String> map = (Map<String, String>)cache.invokeAll(filter, new AbstractProcessor() {
+			
+			@Override
+			public Object process(Entry arg0) {
+				log.debug("Key: "+arg0.getKey());
+				log.debug("Value: "+arg0.getValue());
+				return ((Person)arg0.getValue()).getName();
+			}
+		});
+		Assert.assertTrue("Invocation failed", map.get("person").equalsIgnoreCase("Himanshu"));
 	}
 }
