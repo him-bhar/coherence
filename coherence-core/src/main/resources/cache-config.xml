@@ -30,7 +30,19 @@ Elements" page on the Coherence Wiki (http://wiki.tangosol.com).
 
     Example values include: java, pof. Default value is java.
     -->
-    <serializer system-property="tangosol.coherence.serializer"/>
+<!--     <serializer system-property="tangosol.coherence.serializer"/> -->
+
+	<serializer>
+     	<instance>
+			<class-name>com.tangosol.io.pof.ConfigurablePofContext</class-name>
+			<init-params>
+				<init-param>
+					<param-type>String</param-type>
+					<param-value>my-pof-config.xml</param-value>
+				</init-param>
+			</init-params>
+		</instance>	
+	  </serializer>
     
     <!--
     Note: This element defines the default socket-provider for all Coherence
@@ -112,9 +124,40 @@ Elements" page on the Coherence Wiki (http://wiki.tangosol.com).
       <cache-name>*</cache-name>
       <scheme-name>example-distributed</scheme-name>
     </cache-mapping>
+    
+    <!-- DB Backed cache Customer -->
+	<cache-mapping>
+		<cache-name>com.himanshu.db.*</cache-name>
+		<scheme-name>distributed-db</scheme-name>
+	</cache-mapping>
+	
   </caching-scheme-mapping>
 
   <caching-schemes>
+
+	<distributed-scheme>
+		<scheme-name>distributed-db</scheme-name>
+		<backing-map-scheme>
+			<read-write-backing-map-scheme>
+				<internal-cache-scheme>
+					<local-scheme />
+				</internal-cache-scheme>
+				<cachestore-scheme>
+					<class-scheme>
+						<class-name>com.himanshu.cache.database.store.DBCacheStore</class-name>
+						<init-params>
+							<init-param>
+								<param-type>java.lang.String</param-type>
+								<param-value>{cache-name}</param-value>
+							</init-param>
+						</init-params>
+					</class-scheme>
+				</cachestore-scheme>
+			</read-write-backing-map-scheme>
+		</backing-map-scheme>
+	</distributed-scheme>
+  
+  
     <!--
     Distributed caching scheme.
     -->
@@ -122,17 +165,17 @@ Elements" page on the Coherence Wiki (http://wiki.tangosol.com).
       <scheme-name>example-distributed</scheme-name>
       <service-name>DistributedCache</service-name>
       
-      <serializer>
-     	<instance>
-			<class-name>com.tangosol.io.pof.ConfigurablePofContext</class-name>
-			<init-params>
-				<init-param>
-					<param-type>String</param-type>
-					<param-value>my-pof-config.xml</param-value>
-				</init-param>
-			</init-params>
-		</instance>	
-	  </serializer>
+<!--       <serializer> -->
+<!--      	<instance> -->
+<!-- 			<class-name>com.tangosol.io.pof.ConfigurablePofContext</class-name> -->
+<!-- 			<init-params> -->
+<!-- 				<init-param> -->
+<!-- 					<param-type>String</param-type> -->
+<!-- 					<param-value>my-pof-config.xml</param-value> -->
+<!-- 				</init-param> -->
+<!-- 			</init-params> -->
+<!-- 		</instance>	 -->
+<!-- 	  </serializer> -->
 	  
       <backing-map-scheme>
         <local-scheme>
