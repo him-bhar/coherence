@@ -27,3 +27,17 @@ Since (at the time of this writing at least) there is no public Oracle maven rep
 	mvn install:install-file -Dfile=coherence-common-2.0.0.23647.jar -DgroupId=com.oracle -DartifactId=oracle-coherence-incubator-common -Dversion=2.0.0.23647 -Dsources=coherence-common-2.0.0.23647-src.zip -Dpackaging=jar
 	
 Done ;)
+
+Storage and Non-Storage Nodes is defined by the following system property, while launching the cache:
+
+For non-storage:
+
+    -Dtangosol.coherence.distributed.localstorage=false  
+
+For storage:
+
+    -Dtangosol.coherence.distributed.localstorage=true  
+
+
+Why would I need a non-storage node?
+I might be interested in hosting the data cache separately than application. This way the cache will be launched as a storage node, and the application (which uses cache) will be launched as a non-storage node.
