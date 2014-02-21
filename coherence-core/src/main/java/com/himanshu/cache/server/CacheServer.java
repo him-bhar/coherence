@@ -20,7 +20,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tangosol.net.CacheFactory;
 import com.tangosol.net.DefaultCacheServer;
+import com.tangosol.net.NamedCache;
 
 public class CacheServer {
 	
@@ -32,11 +34,25 @@ public class CacheServer {
 	public void startServer() {
 		log.info("Starting cache server");
 		DefaultCacheServer.start();
+		sampleDataSetup();
 		while (keepRunning.get() == true) {
 			
 		}
 	}
 	
+	private void sampleDataSetup() {
+		log.info("Putting value in cache abc-dist-extend");
+		NamedCache cache = CacheFactory.getCache("abc-dist-extend");
+		Integer IValue = (Integer) cache.get("key");
+		if (IValue == null) {
+			IValue = new Integer(1);
+		} else {
+			IValue = new Integer(IValue.intValue() + 1);
+		}
+		cache.put("key", IValue);
+		
+	}
+
 	public static void main(String[] args) {
 		CacheServer server = new CacheServer();
 		server.addShutdownHook();

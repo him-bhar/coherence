@@ -11,8 +11,11 @@
 		<logback-version>0.9.30</logback-version>
 		<log4j-over-slf4j>1.6.4</log4j-over-slf4j>
 	</properties>
-	<!--<parent> <groupId>org.mycompany</groupId> <artifactId>my-real-app</artifactId> 
-		<version>1.0-SNAPSHOT</version> </parent> -->
+	<parent>
+		<groupId>com.himanshu.coherence</groupId>
+		<artifactId>aggregator</artifactId> 
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>com.oracle</groupId>
