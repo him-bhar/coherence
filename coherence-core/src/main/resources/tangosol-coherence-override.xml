@@ -7,6 +7,7 @@
       <member-identity>
          <cluster-name system-property="tangosol.coherence.cluster">CacheCluster
          </cluster-name>
+         <member-name system-property="tangosol.coherence.member">Member</member-name>
       </member-identity>
       <multicast-listener>
 		 <address system-property="tangosol.coherence.clusteraddress">224.3.6.0</address>
