@@ -41,3 +41,13 @@ For storage:
 
 Why would I need a non-storage node?
 I might be interested in hosting the data cache separately than application. This way the cache will be launched as a storage node, and the application (which uses cache) will be launched as a non-storage node.
+
+Altered packaging structure for this project:
+
+How will it help?
+The new packaging gives us a complete deliverable. jar is present as is in target folder, but now the MANIFEST.MF is created in such a way that all required libraries are added in classpath as is.
+
+"target/lib" directory is created in order to keep all third party dependencies.
+from target folder execute:
+
+    java -jar cache-xxx.jar 
