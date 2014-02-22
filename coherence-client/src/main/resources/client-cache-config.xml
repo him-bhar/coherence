@@ -49,7 +49,7 @@
 				<tcp-initiator>
 					<remote-addresses>
 						<socket-address>
-							<address>192.168.1.4</address>
+							<address>localhost</address>
 							<port>9099</port>
 						</socket-address>
 					</remote-addresses>
@@ -68,7 +68,7 @@
 				<tcp-initiator>
 					<remote-addresses>
 						<socket-address>
-							<address>192.168.1.4</address>
+							<address>localhost</address>
 							<port>9099</port>
 						</socket-address>
 					</remote-addresses>
