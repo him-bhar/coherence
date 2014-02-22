@@ -50,4 +50,27 @@ The new packaging gives us a complete deliverable. jar is present as is in targe
 "target/lib" directory is created in order to keep all third party dependencies.
 from target folder execute:
 
-    java -jar cache-xxx.jar 
+    java -jar cache-xxx.jar
+    
+h3.There is a catch in starting multiple nodes on a single system.
+ 
+Issue since these nodes are TcpAcceptor enabled, this can be viewed in the cache-config.xml of the cluster, under tags -  caching-schemes -> proxy-scheme. This is basically used to configure the TcpAcceptor, so that extend clients can join to the cluster.
+
+    <autostart system-property="tangosol.coherence.extend.enabled">true</autostart>
+ 
+This property inside proxy-scheme confirms if the node will have extend enabled or not.
+Extend enabled means basically a TCP port open in cache node, so a client can connect to it via TCP/IP rather than joining the cluster.
+
+Now, since a single host can support multiple nodes so it is necessary that only one node in a host is extend enabled.
+
+h4.WHY?
+This will be required else all nodes will try to start TcpAcceptor on the same port, which will lead to Bind Exception and except the first node, rest will fail to start.
+
+h4.How to solve?
+Simple, when starting the node which should be extend DISABLED, start it like:
+
+    java -jar -Dtangosol.coherence.extend.enabled=false cache-xxx.jar
+    
+This will work perfectly fine.
+
+In the logs of each node, we will see a difference only the node which will be extend enabled will show log messages like starting Tcp Acceptor
